@@ -7,32 +7,21 @@
 
 #define F_CPU 2000000UL
 
+#include "timer0.h"
+#include "led.h"
+
+#include <stdint.h>
 #include <avr/io.h>
-#include <util/delay.h>
+#include <avr/interrupt.h>
 
-void led_init(void) {
-	DDRC = 0x00;
-	DDRD = 0x00;
+int main(void){
+	//TODO: set direction of LED port to OUTPUT
+	
+	timer0_init();
+	
+	while(1){
+		if(timer0_check_clear_compare()) {
+			led_toggle();
+		}
+	}
 }
-
-int main(void)
-
-{
-	
-	// 2Hz frequency and 75% duty cycle
-	// Period of 0.5s, Ton = 0.375s and Toff = 0.125s
-	
-	led_init();
-	
-    while (1) 
-    {
-		// LED on
-		PORTB |= (1 << PORTB5);
-		_delay_ms(375);
-		
-		// LED off
-		PORTB &= ~(1 << PORTB5);
-		_delay_ms(125);
-    }
-}
-
