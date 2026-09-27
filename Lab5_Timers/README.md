@@ -43,4 +43,4 @@ Keep a digital log of your work using the readme file where appropriate.
 
 Q 4.1: The frequency on waveform on INT0 is 50.08Hz.
 
-Q 
+Q 4.2: Tmax = 256 * 128us = 32.768ms. fmin = 30.52Hz
