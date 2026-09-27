@@ -39,3 +39,4 @@ Keep a digital log of your work using the readme file where appropriate.
 
 **Q 1.6:** OCF0A is located in the TIFR0 register as bit 1. It's cleared by writing a 1 to it.
 
+**Q 3.4:** The maximum range of Timer1 is 2^16 * (1024 / 2 * 10^6) = 33.55s.
