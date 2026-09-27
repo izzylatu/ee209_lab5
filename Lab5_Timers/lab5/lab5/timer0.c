@@ -32,7 +32,15 @@ void timer0_init(){
 }
 
 ISR(TIMER0_COMPA_vect) {
-	led_toggle();
+	
+	static uint8_t interrupt_count = 0;
+	
+	interrupt_count++;
+	
+	if (interrupt_count >= 10) {
+		interrupt_count = 0;
+		led_toggle();
+	}
 }
 
 uint8_t timer0_check_clear_compare(){
