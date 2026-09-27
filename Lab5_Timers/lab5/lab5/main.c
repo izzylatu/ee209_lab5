@@ -19,9 +19,9 @@ int main(void){
 	led_init();	
 	timer0_init();
 	
+	// Enable global interrupts 
+	sei();
+	
 	while(1){
-		if(timer0_check_clear_compare()) {
-			led_toggle();
-		}
 	}
 }

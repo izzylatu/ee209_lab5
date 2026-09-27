@@ -7,9 +7,10 @@
 
 void timer0_init(){
 	
-	// Stop Timer0 while configuring it
+	// Stop and reset Timer0
 	TCCR0A = 0;
 	TCCR0B = 0;
+	TCNT0 = 0;
 	
 	// Start counting from 0
 	TCNT0 = 0;
@@ -23,8 +24,15 @@ void timer0_init(){
 	// Clear any old compare match flags
 	TIFR0 = (1 << OCF0A);
 	
+	// Enable Timer0 Output Compare Match A Interrupt
+	TIMSK0 |= (1 << OCIE0A);
+	
 	// Prescaler 256
 	TCCR0B = (1 << CS02);
+}
+
+ISR(TIMER0_COMPA_vect) {
+	led_toggle();
 }
 
 uint8_t timer0_check_clear_compare(){
