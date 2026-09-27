@@ -36,3 +36,6 @@ Keep a digital log of your work using the readme file where appropriate.
 |     |     |     |     |     |     |     |     |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 0   | 1   | 0   | 0   | 1   | 1   | 0   | 1   |
+
+**Q 1.6:** OCF0A is located in the TIFR0 register as bit 1. It's cleared by writing a 1 to it.
+
