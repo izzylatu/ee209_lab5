@@ -2,14 +2,9 @@
 #define TIMER0_H_
 
 #include <stdint.h>
-#include <stdbool.h>
 
-//Initialize timer0 as per Part 1 (compare match every 9.984ms)
-void timer0_init();
-
-//Using polling check if timer0 has reached comparison value
-//if so, it will clear the compare flag and return 1
-//otherwise, it returns 0
-uint8_t timer0_check_clear_compare();
+void timer0_measurement_init(void);
+uint8_t timer0_measurement_ready(void);
+uint8_t timer0_get_half_period_count(void);
 
 #endif

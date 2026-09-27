@@ -190,15 +190,16 @@
   },
   "active": "4c8397270a1ec995",
   "lastOpenFiles": [
+    "Lab5_Timers/lab5/lab5/Debug/uart.o",
+    "Lab5_Timers/lab5/lab5/Debug/uart.d",
+    "Lab5_Timers/lab5/lab5/uart0.h",
+    "Lab5_Timers/lab5/lab5/uart.c",
     "Lab5_Timers/lab5/lab5/Debug/timer0.o",
     "Lab5_Timers/lab5/lab5/Debug/timer0.d",
     "Lab5_Timers/lab5/lab5/Debug/led.o",
     "Lab5_Timers/lab5/lab5/Debug/led.d",
     "Lab5_Timers/lab5/lab5/led.h",
     "Lab5_Timers/lab5/lab5/led.c",
-    "Lab5_Timers/lab5/lab5/timer0.c",
-    "Lab5_Timers/lab5/lab5/timer0.h",
-    "Lab5_Timers/lab5/lab5/Timer0.h",
-    "Lab5_Timers/lab5/lab5/Timer0.c"
+    "Lab5_Timers/lab5/lab5/timer0.c"
   ]
 }
