@@ -7,10 +7,17 @@
 
 #include <avr/io.h>
 
+void led_init(void) {
+	DDRB |= (1 << PORTB);
+	DDRC = 0x00;
+	DDRD = 0x00;
+}
 
 int main(void)
 {
-    /* Replace with your application code */
+    
+	led_init();
+	
     while (1) 
     {
     }
