@@ -17,3 +17,22 @@ Keep a digital log of your work using the readme file where appropriate.
 **(a)** The prescaler is set to 256.
 **(b)** The resolution of Timer0 is 128 microseconds.
 **(c)** The maximum time range of Timer0 is 32,640 microseconds.
+
+**Q 1.5:** 
+**(a)** TCCR0A
+
+| COM0A1 | COM0A0 | COM0B1 | COM0B0 | -   | -   | WGM01 | WGM00 |
+| ------ | ------ | ------ | ------ | --- | --- | ----- | ----- |
+| 0      | 0      | 0      | 0      |     |     | 1     | 0     |
+
+**(b)** TCCR0B
+
+| FOC0A | FOC0B | -   | -   | WGM02 | CS02 | CS01 | CS00 |
+| ----- | ----- | --- | --- | ----- | ---- | ---- | ---- |
+| 0     | 0     | 0   | 0   | 0     | 1    | 0    | 0    |
+
+**(c)** OCR0A
+
+|     |     |     |     |     |     |     |     |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 0   | 1   | 0   | 0   | 1   | 1   | 0   | 1   |
