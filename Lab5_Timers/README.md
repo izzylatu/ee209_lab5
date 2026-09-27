@@ -11,3 +11,6 @@ Keep a digital log of your work using the readme file where appropriate.
 
 **Q 1.2:** Range of a timer is the maximum time interval that the timer can measure, while resolution is the smallest time interval that the timer can measure, ie. 1 timer clock period.
 
+**Q 1.3:** The purpose of the prescaler is that it divides the system clock to create the timer clock, so that we can work with times that are more efficient than the usual 2MHz system clock.
+
+**Q 1.4:** 
