@@ -16,6 +16,8 @@ Discarded input sections
  .text          0x00000000        0x0 timer0.o
  .data          0x00000000        0x0 timer0.o
  .bss           0x00000000        0x0 timer0.o
+ .text.timer0_check_clear_compare
+                0x00000000       0x12 timer0.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
@@ -161,7 +163,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000       0xda
+.text           0x00000000      0x112
  *(.vectors)
  .vectors       0x00000000       0x68 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
                 0x00000000                __vector_default
@@ -237,7 +239,6 @@ END GROUP
                 0x0000007c                __vector_21
                 0x0000007c                __vector_15
                 0x0000007c                __vector_8
-                0x0000007c                __vector_14
                 0x0000007c                __vector_10
                 0x0000007c                __vector_16
                 0x0000007c                __vector_18
@@ -250,19 +251,19 @@ END GROUP
  .text.led_toggle
                 0x0000008e        0xa led.o
                 0x0000008e                led_toggle
- .text.main     0x00000098       0x16 main.o
+ .text.main     0x00000098        0xc main.o
                 0x00000098                main
  .text.timer0_init
-                0x000000ae       0x16 timer0.o
-                0x000000ae                timer0_init
- .text.timer0_check_clear_compare
-                0x000000c4       0x12 timer0.o
-                0x000000c4                timer0_check_clear_compare
-                0x000000d6                . = ALIGN (0x2)
+                0x000000a4       0x22 timer0.o
+                0x000000a4                timer0_init
+ .text.__vector_14
+                0x000000c6       0x48 timer0.o
+                0x000000c6                __vector_14
+                0x0000010e                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000000d6        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
-                0x000000d6                _exit
-                0x000000d6                exit
+ .fini9         0x0000010e        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+                0x0000010e                _exit
+                0x0000010e                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -281,11 +282,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000000d6        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
+ .fini0         0x0000010e        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/5.4.0/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000000da                _etext = .
+                0x00000112                _etext = .
 
-.data           0x00800100        0x0 load address 0x000000da
+.data           0x00800100        0x0 load address 0x00000112
                 [!provide]                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -303,8 +304,8 @@ END GROUP
  *(.bss*)
  *(COMMON)
                 [!provide]                PROVIDE (__bss_end, .)
-                0x000000da                __data_load_start = LOADADDR (.data)
-                0x000000da                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00000112                __data_load_start = LOADADDR (.data)
+                0x00000112                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x00800100        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
@@ -377,57 +378,58 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0x70
+.debug_aranges  0x00000000       0x78
  *(.debug_aranges)
  .debug_aranges
                 0x00000000       0x28 led.o
  .debug_aranges
                 0x00000028       0x20 main.o
  .debug_aranges
-                0x00000048       0x28 timer0.o
+                0x00000048       0x30 timer0.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x800
+.debug_info     0x00000000      0x805
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x5f4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_info    0x000005f4       0x97 led.o
- .debug_info    0x0000068b       0xda main.o
- .debug_info    0x00000765       0x9b timer0.o
+ .debug_info    0x0000068b       0xae main.o
+ .debug_info    0x00000739       0xcc timer0.o
 
-.debug_abbrev   0x00000000      0x6c0
+.debug_abbrev   0x00000000      0x6f7
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x5a2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_abbrev  0x000005a2       0x4f led.o
  .debug_abbrev  0x000005f1       0x68 main.o
- .debug_abbrev  0x00000659       0x67 timer0.o
+ .debug_abbrev  0x00000659       0x9e timer0.o
 
-.debug_line     0x00000000      0x341
+.debug_line     0x00000000      0x36c
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x134 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_line    0x00000134       0xba led.o
- .debug_line    0x000001ee       0x66 main.o
- .debug_line    0x00000254       0xed timer0.o
+ .debug_line    0x000001ee       0x60 main.o
+ .debug_line    0x0000024e      0x11e timer0.o
 
-.debug_frame    0x00000000       0x8c
+.debug_frame    0x00000000       0xe4
  *(.debug_frame)
  .debug_frame   0x00000000       0x34 led.o
  .debug_frame   0x00000034       0x24 main.o
- .debug_frame   0x00000058       0x34 timer0.o
+ .debug_frame   0x00000058       0x8c timer0.o
 
-.debug_str      0x00000000      0x3be
+.debug_str      0x00000000      0x3ca
  *(.debug_str)
  .debug_str     0x00000000      0x208 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.7.374/gcc/dev/atmega328p/avr5/crtatmega328p.o
  .debug_str     0x00000208      0x170 led.o
                                 0x1a4 (size before relaxing)
- .debug_str     0x00000378       0x38 main.o
-                                0x1c9 (size before relaxing)
- .debug_str     0x000003b0        0xe timer0.o
-                                0x1ba (size before relaxing)
+ .debug_str     0x00000378       0x1d main.o
+                                0x1a3 (size before relaxing)
+ .debug_str     0x00000395       0x35 timer0.o
+                                0x1d1 (size before relaxing)
 
-.debug_loc
+.debug_loc      0x00000000       0xcb
  *(.debug_loc)
+ .debug_loc     0x00000000       0xcb timer0.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -447,11 +449,11 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x40
+.debug_ranges   0x00000000       0x48
  *(.debug_ranges)
  .debug_ranges  0x00000000       0x18 led.o
  .debug_ranges  0x00000018       0x10 main.o
- .debug_ranges  0x00000028       0x18 timer0.o
+ .debug_ranges  0x00000028       0x20 timer0.o
 
 .debug_macro
  *(.debug_macro)
