@@ -15,8 +15,8 @@
 #include <avr/interrupt.h>
 
 int main(void){
-	//TODO: set direction of LED port to OUTPUT
-	
+
+	led_init();	
 	timer0_init();
 	
 	while(1){

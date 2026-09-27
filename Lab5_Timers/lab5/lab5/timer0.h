@@ -1,6 +1,7 @@
 #ifndef TIMER0_H_
 #define TIMER0_H_
 
+#include <stdint.h>
 #include <stdbool.h>
 
 //Initialize timer0 as per Part 1 (compare match every 9.984ms)

@@ -3,29 +3,27 @@ lab5.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  0000010e  2**0
+  0 .data         00000000  00800100  00800100  0000012e  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000000ba  00000000  00000000  00000054  2**1
+  1 .text         000000da  00000000  00000000  00000054  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  0000010e  2**0
+  2 .comment      00000030  00000000  00000000  0000012e  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000140  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000160  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000028  00000000  00000000  00000180  2**0
+  4 .debug_aranges 00000070  00000000  00000000  000001a0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   0000075b  00000000  00000000  000001a8  2**0
+  5 .debug_info   00000800  00000000  00000000  00000210  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 0000069e  00000000  00000000  00000903  2**0
+  6 .debug_abbrev 000006c0  00000000  00000000  00000a10  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   00000288  00000000  00000000  00000fa1  2**0
+  7 .debug_line   00000341  00000000  00000000  000010d0  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000034  00000000  00000000  0000122c  2**2
+  8 .debug_frame  0000008c  00000000  00000000  00001414  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    000003be  00000000  00000000  00001260  2**0
+  9 .debug_str    000003be  00000000  00000000  000014a0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00000048  00000000  00000000  0000161e  2**0
-                  CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000018  00000000  00000000  00001666  2**0
+ 10 .debug_ranges 00000040  00000000  00000000  0000185e  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -65,8 +63,8 @@ Disassembly of section .text:
   6e:	d8 e0       	ldi	r29, 0x08	; 8
   70:	de bf       	out	0x3e, r29	; 62
   72:	cd bf       	out	0x3d, r28	; 61
-  74:	0e 94 43 00 	call	0x86	; 0x86 <main>
-  78:	0c 94 5b 00 	jmp	0xb6	; 0xb6 <_exit>
+  74:	0e 94 4c 00 	call	0x98	; 0x98 <main>
+  78:	0c 94 6b 00 	jmp	0xd6	; 0xd6 <_exit>
 
 0000007c <__bad_interrupt>:
   7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -74,63 +72,113 @@ Disassembly of section .text:
 00000080 <led_init>:
 
 #include <avr/io.h>
-#include <util/delay.h>
 
-void led_init(void) {
-	DDRC = 0x00;
-  80:	17 b8       	out	0x07, r1	; 7
-	DDRD = 0x00;
-  82:	1a b8       	out	0x0a, r1	; 10
-  84:	08 95       	ret
+void led_init() {
+	// PB5 is an output
+	DDRB |= (1 << DDB5);
+  80:	84 b1       	in	r24, 0x04	; 4
+  82:	80 62       	ori	r24, 0x20	; 32
+  84:	84 b9       	out	0x04, r24	; 4
+	// LED should initially be off
+	PORTB &= ~(1 << PORTB5);
+  86:	85 b1       	in	r24, 0x05	; 5
+  88:	8f 7d       	andi	r24, 0xDF	; 223
+  8a:	85 b9       	out	0x05, r24	; 5
+  8c:	08 95       	ret
 
-00000086 <main>:
-{
-	
-	// 2Hz frequency and 75% duty cycle
-	// Period of 0.5s, Ton = 0.375s and Toff = 0.125s
-	
-	led_init();
-  86:	0e 94 40 00 	call	0x80	; 0x80 <led_init>
-	
-    while (1) 
-    {
-		// LED on
-		PORTB |= (1 << PORTB5);
-  8a:	85 b1       	in	r24, 0x05	; 5
-  8c:	80 62       	ori	r24, 0x20	; 32
-  8e:	85 b9       	out	0x05, r24	; 5
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
+0000008e <led_toggle>:
+}
 
-	__builtin_avr_delay_cycles(__ticks_dc);
-  90:	2f ee       	ldi	r18, 0xEF	; 239
-  92:	89 e4       	ldi	r24, 0x49	; 73
-  94:	92 e0       	ldi	r25, 0x02	; 2
-  96:	21 50       	subi	r18, 0x01	; 1
-  98:	80 40       	sbci	r24, 0x00	; 0
-  9a:	90 40       	sbci	r25, 0x00	; 0
-  9c:	e1 f7       	brne	.-8      	; 0x96 <main+0x10>
-  9e:	00 c0       	rjmp	.+0      	; 0xa0 <main+0x1a>
-  a0:	00 00       	nop
-		_delay_ms(375);
+void led_toggle(){
+	// Writing 1 to PB5 toggles the PB5 output
+	PORTB ^= (1 << PORTB5);
+  8e:	95 b1       	in	r25, 0x05	; 5
+  90:	80 e2       	ldi	r24, 0x20	; 32
+  92:	89 27       	eor	r24, r25
+  94:	85 b9       	out	0x05, r24	; 5
+  96:	08 95       	ret
+
+00000098 <main>:
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+int main(void){
+
+	led_init();	
+  98:	0e 94 40 00 	call	0x80	; 0x80 <led_init>
+	timer0_init();
+  9c:	0e 94 57 00 	call	0xae	; 0xae <timer0_init>
+	
+	while(1){
+		if(timer0_check_clear_compare()) {
+  a0:	0e 94 62 00 	call	0xc4	; 0xc4 <timer0_check_clear_compare>
+  a4:	88 23       	and	r24, r24
+  a6:	e1 f3       	breq	.-8      	; 0xa0 <main+0x8>
+			led_toggle();
+  a8:	0e 94 47 00 	call	0x8e	; 0x8e <led_toggle>
+  ac:	f9 cf       	rjmp	.-14     	; 0xa0 <main+0x8>
+
+000000ae <timer0_init>:
+#include <stdint.h>
+
+void timer0_init(){
+	
+	// Stop Timer0 while configuring it
+	TCCR0A = 0;
+  ae:	14 bc       	out	0x24, r1	; 36
+	TCCR0B = 0;
+  b0:	15 bc       	out	0x25, r1	; 37
+	
+	// Start counting from 0
+	TCNT0 = 0;
+  b2:	16 bc       	out	0x26, r1	; 38
+	
+	// Compare after 78 timer ticks (77+1) x 128us = 9.984ms
+	OCR0A = 77;
+  b4:	8d e4       	ldi	r24, 0x4D	; 77
+  b6:	87 bd       	out	0x27, r24	; 39
+	
+	// CTC Mode
+	TCCR0A = (1 << WGM01);
+  b8:	82 e0       	ldi	r24, 0x02	; 2
+  ba:	84 bd       	out	0x24, r24	; 36
+	
+	// Clear any old compare match flags
+	TIFR0 = (1 << OCF0A);
+  bc:	85 bb       	out	0x15, r24	; 21
+	
+	// Prescaler 256
+	TCCR0B = (1 << CS02);
+  be:	84 e0       	ldi	r24, 0x04	; 4
+  c0:	85 bd       	out	0x25, r24	; 37
+  c2:	08 95       	ret
+
+000000c4 <timer0_check_clear_compare>:
+}
+
+uint8_t timer0_check_clear_compare(){
+	
+	// Check Output Compare Match A Flag
+	if (TIFR0 & (1 << OCF0A)){
+  c4:	95 b3       	in	r25, 0x15	; 21
+  c6:	89 2f       	mov	r24, r25
+  c8:	82 70       	andi	r24, 0x02	; 2
+  ca:	91 ff       	sbrs	r25, 1
+  cc:	03 c0       	rjmp	.+6      	; 0xd4 <timer0_check_clear_compare+0x10>
 		
-		// LED off
-		PORTB &= ~(1 << PORTB5);
-  a2:	85 b1       	in	r24, 0x05	; 5
-  a4:	8f 7d       	andi	r24, 0xDF	; 223
-  a6:	85 b9       	out	0x05, r24	; 5
-  a8:	83 e2       	ldi	r24, 0x23	; 35
-  aa:	94 ef       	ldi	r25, 0xF4	; 244
-  ac:	01 97       	sbiw	r24, 0x01	; 1
-  ae:	f1 f7       	brne	.-4      	; 0xac <main+0x26>
-  b0:	00 c0       	rjmp	.+0      	; 0xb2 <main+0x2c>
-  b2:	00 00       	nop
-  b4:	ea cf       	rjmp	.-44     	; 0x8a <main+0x4>
+		// Clear compare flag
+		TIFR0 = (1 << OCF0A);
+  ce:	82 e0       	ldi	r24, 0x02	; 2
+  d0:	85 bb       	out	0x15, r24	; 21
+		
+		return 1;
+  d2:	81 e0       	ldi	r24, 0x01	; 1
+	}
+	return 0;
+  d4:	08 95       	ret
 
-000000b6 <_exit>:
-  b6:	f8 94       	cli
+000000d6 <_exit>:
+  d6:	f8 94       	cli
 
-000000b8 <__stop_program>:
-  b8:	ff cf       	rjmp	.-2      	; 0xb8 <__stop_program>
+000000d8 <__stop_program>:
+  d8:	ff cf       	rjmp	.-2      	; 0xd8 <__stop_program>
